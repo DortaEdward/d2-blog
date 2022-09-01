@@ -1,16 +1,23 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import styles from "../styles/Home.module.css";
+import parse from "html-react-parser";
 
 const Home: NextPage = () => {
+  const test =
+    "<div><h1 className='font-bold'>This is testing rendering html from a string</h1><p>This is paragraph</p></div>";
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>D2-Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>Blog Main</main>
+      <main>
+        <h2>Blog Main</h2>
+        <blockquote>This is block quote</blockquote>
+        {parse(test)}
+      </main>
     </div>
   );
 };
