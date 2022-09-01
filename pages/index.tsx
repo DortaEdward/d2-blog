@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
+import React, { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
 import parse from "html-react-parser";
 
 const Home: NextPage = () => {
-  const test =
-    "<div><h1 className='font-bold'>This is testing rendering html from a string</h1><p>This is paragraph</p></div>";
+  const [inputState, setInputState] = useState("");
 
   return (
     <div>
@@ -15,8 +15,15 @@ const Home: NextPage = () => {
       </Head>
       <main>
         <h2>Blog Main</h2>
+        <input
+          className="outline"
+          type="text"
+          onChange={(e) => {
+            setInputState(e.target.value);
+          }}
+        />
         <blockquote>This is block quote</blockquote>
-        {parse(test)}
+        {parse(inputState)}
       </main>
     </div>
   );
