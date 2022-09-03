@@ -10,8 +10,8 @@ const Home = () => {
         <title>D2-Blog</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-col justify-center items-center gap-8">
-        <form className="w-full flex flex-col items-center justify-center">
+      <main className="flex flex-col justify-center items-center gap-4">
+        <form className="w-full flex flex-col items-center justify-center m-2">
           <input
             className="w-9/12 h-10 rounded-md outline-none text-gray-600 p-4"
             type="text"
