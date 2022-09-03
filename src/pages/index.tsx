@@ -14,7 +14,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h2>Blog Main</h2>
+        <h2 className="">Blog Main</h2>
         <input
           className="outline"
           type="text"
