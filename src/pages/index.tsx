@@ -1,9 +1,14 @@
 import { useState } from "react";
 import Head from "next/head";
 import PostCard from "../components/PostCard";
+import { trpc } from "../utils/trpc";
 
 const Home = () => {
+  // const { data, isLoading } = trpc.useQuery(["hello", { text: "Edward" }]);
   const [searchInput, setSearchInput] = useState("");
+
+  // if (isLoading) return <div>Loading...</div>;
+
   return (
     <div className="w-full">
       <Head>
