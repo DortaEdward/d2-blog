@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
 
 const Create: React.FC = () => {
@@ -7,9 +8,13 @@ const Create: React.FC = () => {
   const [imageUrlState, setImageUrlState] = useState("");
   const [contentState, setContentState] = useState("");
 
-  const [error, setError] = useState("");
+  const router = useRouter();
 
-  const { mutate, isLoading } = trpc.useMutation("createPost", {});
+  const { mutate, isLoading } = trpc.useMutation("createPost", {
+    onSuccess: () => {
+      router.push("/");
+    },
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
