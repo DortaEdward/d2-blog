@@ -1,13 +1,29 @@
 import React, { useState, useRef } from "react";
 import Link from "next/link";
+import { trpc } from "@/utils/trpc";
 
-const Create = () => {
+const Create: React.FC = () => {
   const [titleState, setTitleState] = useState("");
-  const [contentState, setContentState] = useState("");
   const [imageUrlState, setImageUrlState] = useState("");
+  const [contentState, setContentState] = useState("");
+
+  const [error, setError] = useState("");
+
+  const { mutate, isLoading } = trpc.useMutation("createPost", {});
+
   const handleSubmit = async (e) => {
-    console.log(e.target);
+    e.preventDefault();
+    const payload = {
+      title: titleState,
+      imageUrl: imageUrlState,
+      content: contentState,
+    };
+    mutate(payload);
+    setTitleState("");
+    setImageUrlState("");
+    setContentState("");
   };
+
   return (
     <form
       className="flex flex-col max-w-screen-lg w-full gap-2 items-center"
@@ -16,6 +32,7 @@ const Create = () => {
       <input
         type="text"
         placeholder="Title"
+        required
         className="p-3 w-4/5 rounded text-black"
         onChange={(e) => {
           setTitleState(e.target.value);
@@ -30,6 +47,7 @@ const Create = () => {
         }}
       />
       <textarea
+        required
         placeholder="Start typing here...."
         className="outline text-black p-3 w-4/5 h-72 rounded resize-none"
         onChange={(e) => {
