@@ -1,18 +1,21 @@
 import Image from "next/image";
 import Portrait from "../images/portrait.png";
+import Link from "next/link";
 const Header = () => {
   const iconStyles =
     "w-7 h-7 stroke-current stroke-2 transition duration-150 ease-out cursor-pointer hover:scale-110";
   return (
     <header className="flex w-full items-center justify-center p-6">
       <div className="flex flex-wrap gap-8 items-center justify-center">
-        <Image
-          src={Portrait}
-          alt="Portrait"
-          width={120}
-          height={120}
-          className="rounded-full"
-        />
+        <Link href="/">
+          <Image
+            src={Portrait}
+            alt="Portrait"
+            width={120}
+            height={120}
+            className="rounded-full hover:cursor-pointer"
+          />
+        </Link>
         <div className="flex gap-10">
           <div className="flex flex-col items-center gap-1">
             <p className="text-sm">FTMG Founder</p>

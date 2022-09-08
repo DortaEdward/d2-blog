@@ -4,10 +4,10 @@ import PostCard from "../components/PostCard";
 import { trpc } from "../utils/trpc";
 
 const Home = () => {
-  // const { data, isLoading } = trpc.useQuery(["hello", { text: "Edward" }]);
+  const { data, isLoading } = trpc.useQuery(["getPosts"]);
   const [searchInput, setSearchInput] = useState("");
 
-  // if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className="w-full">
@@ -23,6 +23,7 @@ const Home = () => {
             placeholder="Search For Post..."
           />
         </form>
+        {JSON.stringify(data)}
         <PostCard />
         <PostCard />
         <PostCard />
