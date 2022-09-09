@@ -1,7 +1,10 @@
 import { useState } from "react";
 import Head from "next/head";
+import PostCardContainer from "@/components/PostCardContainer";
 import PostCard from "../components/PostCard";
 import { trpc } from "../utils/trpc";
+
+import Image from "next/image";
 
 const Home = () => {
   const { data, isLoading } = trpc.useQuery(["getPosts"]);
@@ -23,10 +26,33 @@ const Home = () => {
             placeholder="Search For Post..."
           />
         </form>
-        {JSON.stringify(data)}
-        <PostCard />
-        <PostCard />
-        <PostCard />
+        {data?.map((post) => {
+          return (
+            <a
+              key={post.id}
+              href={`/post/${post.id}`}
+              className="relative cursor-pointer flex flex-col h-72 w-4/6 rounded-md"
+            >
+              <p className="absolute top-0 left-0 text-2xl bg-black bg-opacity-60 p-3">
+                {post.title}
+              </p>
+              <p className="absolute bottom-0 left-0 text-lg bg-black bg-opacity-60 p-3">
+                {post.content.length < 60
+                  ? post.content
+                  : post.content.slice(0, 60) + "..."}
+              </p>
+              <Image
+                className="absolute top-0 left-0 -z-10"
+                src={post.imageUrl}
+                alt="image"
+                width={100}
+                height={100}
+                layout="responsive"
+                objectFit="cover"
+              />
+            </a>
+          );
+        })}
       </main>
     </div>
   );
