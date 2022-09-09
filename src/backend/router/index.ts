@@ -14,11 +14,12 @@ export const appRouter = trpc
       return await prisma.post.findMany();
     },
   })
-  .query("getPost", {
+  .query("get-post-by-id", {
     input: z.object({
-      id: z.number(),
+      id: z.string(),
     }),
     async resolve({ input }) {
+      console.log("hitting query");
       return await prisma.post.findFirst({
         where: {
           id: input.id,
