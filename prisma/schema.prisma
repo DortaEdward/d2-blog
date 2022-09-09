@@ -1,17 +1,28 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model Post {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
+  title     String   @unique @db.VarChar(255)
   content   String   @db.Text
   imageUrl  String
+  slug      String   @unique @db.VarChar(255)
+  Tags      Tag[]
+}
+
+model Tag {
+  id     Int    @id @default(autoincrement())
+  name   String @db.VarChar(255)
+  Post   Post?  @relation(fields: [postId], references: [id])
+  postId Int?
 }
