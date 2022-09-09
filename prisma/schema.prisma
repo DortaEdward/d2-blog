@@ -17,12 +17,4 @@ model Post {
   content   String   @db.Text
   imageUrl  String
   slug      String   @unique @db.VarChar(255)
-  Tags      Tag[]
-}
-
-model Tag {
-  id     Int    @id @default(autoincrement())
-  name   String @db.VarChar(255)
-  Post   Post?  @relation(fields: [postId], references: [id])
-  postId Int?
 }

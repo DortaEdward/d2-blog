@@ -1,6 +1,5 @@
 import prisma from "../../db";
 import * as trpc from "@trpc/server";
-import { resolve } from "path";
 import { z } from "zod";
 const { marked } = require("marked");
 const slugify = require("slugify");
@@ -15,6 +14,18 @@ export const appRouter = trpc
       return await prisma.post.findMany();
     },
   })
+  .query("getPost", {
+    input: z.object({
+      id: z.number(),
+    }),
+    async resolve({ input }) {
+      return await prisma.post.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+    },
+  })
   .mutation("createPost", {
     input: z.object({
       title: z.string(),
@@ -24,7 +35,6 @@ export const appRouter = trpc
     }),
     async resolve({ input }) {
       input.content = dompurify.sanitize(marked(input.content));
-      input.slug = slugify(input.title, { lower: true, strict: true });
       return await prisma.post.create({
         data: {
           title: input.title,
@@ -35,5 +45,4 @@ export const appRouter = trpc
       });
     },
   });
-// export type definition of API
 export type AppRouter = typeof appRouter;

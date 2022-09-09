@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
+import slugify from "slugify";
 
 const Create: React.FC = () => {
   const [titleState, setTitleState] = useState("");
@@ -16,17 +17,26 @@ const Create: React.FC = () => {
     },
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const payload = {
-      title: titleState,
-      imageUrl: imageUrlState,
-      content: contentState,
-    };
-    mutate(payload);
+  const clearState = () => {
     setTitleState("");
     setImageUrlState("");
     setContentState("");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const slug = slugify(titleState, {
+      lower: true,
+      strict: true,
+    }).toString();
+    const payload = {
+      title: titleState,
+      imageUrl: imageUrlState ? imageUrlState : "",
+      content: contentState,
+      slug: slug,
+    };
+    mutate(payload);
+    clearState();
   };
 
   return (
